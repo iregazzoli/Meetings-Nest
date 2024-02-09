@@ -21,6 +21,19 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Running the app with Docker
+
+```bash
+# Build Docker Image
+$ docker-compose up --build
+
+# Run the app with Docker. The -d flag is optional and runs the containers in the background.
+$ docker-compose up -d 
+
+# Stop the app with Docker
+$ docker-compose down
+```
+
 ## Test
 
 ```bash
@@ -33,5 +46,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-
