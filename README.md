@@ -28,7 +28,7 @@ $ npm run start:prod
 $ docker-compose up --build
 
 # Run the app with Docker. The -d flag is optional and runs the containers in the background.
-$ docker-compose up -d 
+$ docker-compose up -d
 
 # Stop the app with Docker
 $ docker-compose down
@@ -45,4 +45,18 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Running migrations with TypeORM
+
+```bash
+
+# Create a new migration
+$ npm run typeorm migration:create -n <migration-name>
+
+# Run migrations
+$ npm run typeorm migration:run
+
+# Revert migrations
+$ npm run typeorm migration:revert
 ```
