@@ -10,6 +10,14 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
+  async createUser(firstName: string, password: string): Promise<User> {
+    const user = new User();
+    user.firstName = firstName;
+    user.password = password;
+
+    return this.usersRepository.save(user);
+  }
+
   findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
