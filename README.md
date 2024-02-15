@@ -50,7 +50,6 @@ $ npm run test:cov
 ## Running migrations with TypeORM
 
 ```bash
-
 # Create a new migration
 $ npm run typeorm migration:create -n <migration-name>
 

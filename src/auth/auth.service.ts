@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException, ConflictException } from "@nestjs/common";
 import { AuthDto } from "./dto";
 import { UsersService } from '../users/users.service';
 import * as argon from 'argon2';
@@ -15,9 +15,9 @@ export class AuthService{
     const existingUser = await this.usersService.findUserByEmail(dto.email);
     
     if (existingUser) {
-      throw new Error('Email already in use');
+      throw new ConflictException('Email already in use');
     }
-    
+
     const hash = await argon.hash(dto.password);
 
     const user = await this.usersService.createUser(dto.email, hash);
@@ -26,7 +26,15 @@ export class AuthService{
     return user;
   }
 
-  signIn() {
-    return "Sing in succesfully"
+  async signIn(dto: AuthDto) {
+    const user = await this.usersService.findUserByEmail(dto.email);
+
+    if(!user) throw new UnauthorizedException('Invalid user');
+
+    const pwMatchs = await argon.verify(user.password, dto.password)
+
+    if(!pwMatchs) throw new UnauthorizedException('Invalid password')
+
+    return user
   }
 }
