@@ -12,10 +12,17 @@ export class AuthService{
   ) {}
 
   async signUp(dto: AuthDto) {
+    const existingUser = await this.usersService.findUserByEmail(dto.email);
+    
+    if (existingUser) {
+      throw new Error('Email already in use');
+    }
+    
     const hash = await argon.hash(dto.password);
 
     const user = await this.usersService.createUser(dto.email, hash);
 
+    //TODO don't return hashed password
     return user;
   }
 
