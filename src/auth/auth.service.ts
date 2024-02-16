@@ -2,6 +2,8 @@ import { Injectable, UnauthorizedException, ConflictException } from "@nestjs/co
 import { AuthDto } from "./dto";
 import { UsersService } from '../users/users.service';
 import * as argon from 'argon2';
+import { JwtService } from "@nestjs/jwt";
+
 
 @Injectable({})
 
@@ -9,6 +11,7 @@ export class AuthService{
 
   constructor(
     private usersService: UsersService,
+    private jwtService: JwtService,
   ) {}
 
   async signUp(dto: AuthDto) {
@@ -35,6 +38,9 @@ export class AuthService{
 
     if(!pwMatchs) throw new UnauthorizedException('Invalid password')
 
-    return user
+    const payload = { sub: user.id, username: user.userName };
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }

@@ -10,9 +10,9 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async createUser(firstName: string, password: string): Promise<User> {
+  async createUser(userName: string, password: string): Promise<User> {
     const user = new User();
-    user.firstName = firstName;
+    user.userName = userName;
     user.password = password;
 
     return this.usersRepository.save(user);
@@ -31,6 +31,6 @@ export class UsersService {
   }
 
   async findUserByEmail(email: string) {
-    return this.usersRepository.findOne({ where: { firstName: email } });
+    return this.usersRepository.findOne({ where: { userName: email } });
   }
 }

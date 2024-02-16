@@ -1,0 +1,14 @@
+{
+  "type": "postgres",
+  "host": "dev-db",
+  "port": 5432,
+  "username": "admin",
+  "password": "1234",
+  "database": "meets_nest",
+  "entities": ["src/users/user.entity.ts"],
+  "synchronize": false,
+  "migrations": ["./migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./migrations"
+  }
+}
