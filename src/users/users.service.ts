@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async createUser(userName: string, password: string): Promise<User> {
@@ -32,5 +34,15 @@ export class UsersService {
 
   async findUserByEmail(email: string) {
     return this.usersRepository.findOne({ where: { userName: email } });
+  }
+
+  async findUserByJwt(token: string) {
+    const payload = this.jwtService.decode(token);
+      
+    if (payload && payload.sub) {
+      return this.usersRepository.findOne({ where: { id: payload.sub } });
+    }
+
+    return null;
   }
 }
