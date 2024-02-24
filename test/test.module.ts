@@ -12,8 +12,9 @@ import { AppModule } from '../src/app.module';
       username: 'admin',
       password: '1234',
       database: 'meets_nest_test',
-      autoLoadEntities: true,
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
+      autoLoadEntities: true,
     }),
   ],
 })

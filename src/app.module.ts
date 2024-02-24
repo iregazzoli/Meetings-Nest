@@ -3,12 +3,14 @@ import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
+import { MeetModule } from './meets/meet.module';
+
 
 @Module({
   imports: [
     AuthModule, 
-    UsersModule,  
+    UsersModule,
+    MeetModule,  
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST, 
@@ -16,11 +18,11 @@ import { User } from './users/user.entity';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DEFAULT_DB,
-      entities: [User], 
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
       migrations: ['../migrations/*.ts'],
-    })
+    }), MeetModule
   ],
   controllers: [AppController],
 })
