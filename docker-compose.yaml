@@ -1,21 +1,32 @@
-version: "3.8"
+version: '3.8'
 services:
   dev-db:
     restart: always
     image: postgres:16
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_DB: meets_nest
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 1234
+
+  test-db:
+    restart: always
+    image: postgres:16
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_DB: meets_nest_test
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+
   app:
     container_name: nest-docker-postgres
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - .:/usr/src/app
     depends_on:
