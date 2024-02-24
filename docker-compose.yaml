@@ -20,6 +20,16 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 1234
 
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run test:e2e
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - test-db
+
   app:
     container_name: nest-docker-postgres
     build:

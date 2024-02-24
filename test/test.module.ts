@@ -7,8 +7,8 @@ import { AppModule } from '../src/app.module';
     AppModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5433,
+      host: 'test-db', 
+      port: 5432, // port inside the Docker container
       username: 'admin',
       password: '1234',
       database: 'meets_nest_test',
