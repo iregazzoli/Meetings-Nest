@@ -1,7 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { Meet } from '../meets/meet.entity';
 
-
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
