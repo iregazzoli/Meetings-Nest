@@ -13,16 +13,16 @@ export class MeetService {
   ) {}
   
   async createMeet(name: string, userId: number): Promise<Meet> {
-    const meet = new Meet();
-    meet.name = name;
+    const newMeet = new Meet();
+    newMeet.name = name;
 
     const user = await this.userService.findOne(userId); 
     if (!user) {
       throw new Error('User not found');
     }
 
-    meet.user = user;
+    newMeet.user = user;
     
-    return this.meetsRepository.save(meet);
+    return this.meetsRepository.save(newMeet);
   }
 }
