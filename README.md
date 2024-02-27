@@ -27,7 +27,7 @@ $ npm run start:prod
 # Build Docker Image
 $ docker-compose up --build
 
-# Run the app with Docker in development mode. The -d flag is optional and runs the containers in the background.
+# Run the app with Docker in development mode.
 $ npm run docker:dev
 
 # Stop the app with Docker
@@ -39,6 +39,9 @@ $ docker-compose down
 ```bash
 # unit tests
 $ npm run test
+
+# run isolated test example
+$ npx jest src/meets/meet.controller.spec.ts
 
 # e2e tests
 $ npm run test:e2e
