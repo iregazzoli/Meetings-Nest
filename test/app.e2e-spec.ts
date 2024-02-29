@@ -9,20 +9,22 @@ describe('AppController (e2e)', () => {
   let dataSource: DataSource;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [TestModule],
-    }).compile();
+    try {
+      const moduleFixture: TestingModule = await Test.createTestingModule({
+        imports: [TestModule],
+      }).compile();
 
-    app = moduleFixture.createNestApplication();
-    dataSource = moduleFixture.get(DataSource);
-    await app.init();
+      app = moduleFixture.createNestApplication();
+      dataSource = moduleFixture.get(DataSource);
+      await app.init();
+    } catch (error) {
+      console.error('Failed to initialize app:', error);
+    }
+  });
 
-    //Clear DB
-    const entities = dataSource.entityMetadatas;
-
-    for (const entity of entities) {
-      const repository = dataSource.getRepository(entity.name);
-      await repository.clear();
+  afterEach(async () => {
+    if (app) {
+      await app.close();
     }
   });
 

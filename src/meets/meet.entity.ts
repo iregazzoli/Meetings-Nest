@@ -13,7 +13,7 @@ export class Meet {
   @Column()
   name: string;
 
-  @ManyToOne(() => User, user => user.meets)
+  @ManyToOne(() => User, user => user.meets, { onDelete: 'CASCADE' })
   user: User;
 
   @CreateDateColumn()
