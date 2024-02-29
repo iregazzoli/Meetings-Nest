@@ -26,6 +26,17 @@ export class MeetService {
     return this.meetsRepository.save(newMeet);
   }
 
+  async updateMeet(id: number, name: string){
+    const targetMeet = await this.meetsRepository.findOne({ where: { id: id } });
+    if (!targetMeet) {
+      throw new NotFoundException(`Meet with id: ${id} not found`);
+    }
+
+    targetMeet.name = name;
+
+    return this.meetsRepository.save(targetMeet);
+  }
+
   async deleteMeet(id: number) {
     const targetMeet = await this.meetsRepository.findOne({ where: { id: id } });
     if (!targetMeet) {
