@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Meet } from './meet.entity';
@@ -24,5 +24,14 @@ export class MeetService {
     newMeet.user = user;
     
     return this.meetsRepository.save(newMeet);
+  }
+
+  async deleteMeet(id: number) {
+    const targetMeet = await this.meetsRepository.findOne({ where: { id: id } });
+    if (!targetMeet) {
+      throw new NotFoundException(`Meet with id: ${id} not found`);
+    }
+
+    await this.meetsRepository.remove(targetMeet);
   }
 }

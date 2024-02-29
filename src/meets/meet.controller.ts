@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Headers } from '@nestjs/common';
+import { Body, Controller, Post, Headers, Delete, Param } from '@nestjs/common';
 import { MeetService } from './meet.service';
 import { Meet } from './meet.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -15,6 +15,11 @@ export class MeetController {
     const decodedToken = this.jwtService.decode(token);
     const userId = decodedToken['userId'];
     return this.meetService.createMeet(name, userId);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.meetService.deleteMeet(+id);
   }
 }
 
