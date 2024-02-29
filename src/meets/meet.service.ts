@@ -11,6 +11,16 @@ export class MeetService {
     private meetsRepository: Repository<Meet>,
     private userService: UsersService,
   ) {}
+
+
+  async findOne(id: number): Promise<Meet> {
+    const meet = await this.meetsRepository.findOne({ where: { id: id } });
+    if (!meet) {
+      throw new NotFoundException(`Meet with id: ${id} not found`);
+    }
+
+    return meet;
+  }
   
   async createMeet(name: string, userId: number): Promise<Meet> {
     const newMeet = new Meet();

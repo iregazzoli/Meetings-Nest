@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Headers, Delete, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Post, Headers, Delete, Param, Patch, Get } from '@nestjs/common';
 import { MeetService } from './meet.service';
 import { Meet } from './meet.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -9,7 +9,10 @@ export class MeetController {
     private readonly jwtService: JwtService
   ) {}
 
-
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.meetService.findOne(+id);
+  }
 
   @Post()
   async create(@Body('meetName') name: string, @Headers('authorization') authHeader: string): Promise<Meet> {
